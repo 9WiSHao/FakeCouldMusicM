@@ -11,6 +11,17 @@ const routes = [
 	{
 		path: '/login',
 		component: Login,
+		redirect: '/login/phone',
+		children: [
+			{
+				path: 'phone',
+				component: () => import('@/views/Login/components/Phone.vue'),
+			},
+			{
+				path: 'qrcode',
+				component: () => import('@/views/Login/components/Qrcode.vue'),
+			},
+		],
 	},
 
 	{
@@ -19,7 +30,7 @@ const routes = [
 	},
 	{
 		path: '/:catchAll(.*)',
-		redirect: '/home',
+		redirect: '/login',
 	},
 ];
 const router = createRouter({

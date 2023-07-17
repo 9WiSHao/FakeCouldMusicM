@@ -3,14 +3,15 @@
 	import Services from './components/Services.vue';
 	import { service1, service2, service3, service4 } from './components/siderBar';
 	import { ref } from 'vue';
-	import { useRouter } from 'vue-router';
+	import { useUserStore } from '@/stores/person.js';
 
 	// 没登录的时候的默认值
-	let username = ref('未登录');
-	let avatorUrl = ref('src/assets/images/Akkarin.jpg');
+	const { user, b } = useUserStore();
+	// let username = ref('未登录');
+	// let avatorUrl = ref('src/assets/images/Akkarin.jpg');
 
 	const toPersionalMessage = () => {
-		if (username.value === '未登录') {
+		if (user.nickname === '未登录') {
 			router.push('/login');
 			return;
 		}
@@ -21,8 +22,8 @@
 	<div class="side-main">
 		<div class="top">
 			<div class="left" @click="toPersionalMessage">
-				<img :src="avatorUrl" alt="" class="avator" />
-				<div class="name">{{ username }}</div>
+				<img :src="user.avatarUrl" alt="" class="avator" />
+				<div class="name">{{ user.nickname }}</div>
 				<img src="@/assets/icon/sideBar/右折箭头.svg" alt="" class="arrows" />
 			</div>
 			<img src="@/assets/icon/sideBar/扫码.svg" alt="" class="scanQR" />
