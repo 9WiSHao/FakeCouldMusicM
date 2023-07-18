@@ -1,15 +1,21 @@
-<script setup></script>
+<script setup>
+	import { defineProps } from 'vue';
+	defineProps({
+		count: Number,
+		lists: Array,
+	});
+</script>
 <template>
 	<div class="comment">
 		<div class="title">
 			<div class="left">
 				<div class="text">我的评论</div>
-				<div class="num">(6)</div>
+				<div class="num">({{ count }})</div>
 			</div>
 			<img src="@/assets/icon/person/锁.svg" alt="" />
 		</div>
 		<div class="comments">
-			<div class="comment1">
+			<div class="comment1" v-if="!lists">
 				<div class="song">
 					<div class="left">
 						<img src="@/assets/images/never.png" alt="" class="song-cover" />
@@ -22,6 +28,20 @@
 				</div>
 				<div class="text">哎呀这不dj吗，还是看看远处的雪山吧家人们</div>
 				<div class="date">2022年2月22日</div>
+			</div>
+			<div class="comment1" v-else v-for="list in lists.slice(0, 2)" :key="list.commentId">
+				<div class="song">
+					<div class="left">
+						<img src="@/assets/images/noCover.png" alt="" class="song-cover" />
+						<div class="song-name">{{ list.songName }} - {{ list.singer }}</div>
+					</div>
+					<div class="right">
+						<div class="likes">{{ list.likedCount }}</div>
+						<img src="@/assets/icon/person/点赞.svg" alt="" class="like" />
+					</div>
+				</div>
+				<div class="text">{{ list.content }}</div>
+				<div class="date">{{ list.time }}</div>
 			</div>
 		</div>
 		<div class="line"></div>
@@ -57,7 +77,7 @@
 		.comments {
 			display: flex;
 			flex-direction: column;
-			gap: 6px;
+			gap: 2.5vh;
 			.comment1 {
 				display: flex;
 				flex-direction: column;

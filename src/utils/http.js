@@ -21,5 +21,24 @@ httpInstance.interceptors.response.use(
 		return Promise.reject(e);
 	}
 );
+// 我自己部署的服务，有的接口总错，偶尔用用（主要没https，还是没咋用）
+const httpInstance2 = axios.create({
+	baseURL: 'http://162.14.111.196:4000',
+	timeout: 6000,
+});
+httpInstance2.interceptors.request.use(
+	(config) => {
+		return config;
+	},
+	(e) => Promise.reject(e)
+);
+
+httpInstance2.interceptors.response.use(
+	(res) => res.data,
+	(e) => {
+		return Promise.reject(e);
+	}
+);
 
 export default httpInstance;
+export { httpInstance2 };

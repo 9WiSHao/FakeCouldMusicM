@@ -1,23 +1,39 @@
-<script setup></script>
+<script setup>
+	import { defineProps } from 'vue';
+	defineProps({
+		title: String,
+		count: Number,
+		lists: Array,
+	});
+	const toList = (id) => {
+		console.log(id);
+		// router.push({
+		//   path: '/list',
+		//   query: {
+		//     id,
+		//   },
+		// });
+	};
+</script>
 <template>
 	<div class="list">
 		<div class="title">
-			<div class="text">歌单1</div>
-			<div class="num">(3个)</div>
+			<div class="text">{{ title }}</div>
+			<div class="num">({{ count }}个)</div>
 		</div>
 		<div class="song-lists">
-			<div class="list1">
+			<div class="list1" v-if="!lists">
 				<img src="@/assets/images/never.png" alt="" />
 				<div class="right">
-					<div class="list-title">歌单名</div>
+					<div class="list-title">加载中</div>
 					<div class="message">10首，By wishao，播放1次</div>
 				</div>
 			</div>
-			<div class="list1">
-				<img src="@/assets/images/never.png" alt="" />
+			<div class="list1" v-else v-for="list in lists.slice(0, 10)" :key="list.id" @click="toList(list.id)">
+				<img :src="list.coverUrl" alt="" />
 				<div class="right">
-					<div class="list-title">歌单名</div>
-					<div class="message">10首，By wishao，播放1次</div>
+					<div class="list-title">{{ list.listName }}</div>
+					<div class="message">{{ list.songNum }}首，By {{ list.creator }}，播放{{ list.playCount }}次</div>
 				</div>
 			</div>
 		</div>
@@ -60,12 +76,19 @@
 				}
 				.right {
 					.list-title {
-						font-size: large;
+						max-width: 71vw;
 						margin-bottom: 6px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
 					}
 					.message {
-						font-size: small;
+						max-width: 71vw;
+						font-size: x-small;
 						color: #999;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
 					}
 				}
 			}

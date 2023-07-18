@@ -1,14 +1,17 @@
-<script setup></script>
+<script setup>
+	import { useUserStore } from '@/stores/person.js';
+	const { user, userReal } = useUserStore();
+</script>
 <template>
 	<div class="base">
 		<div class="title">
 			<div class="text">基本信息</div>
 			<div class="button">领取村民证</div>
 		</div>
-		<div class="could-age">村龄：6年(2017年03月注册)</div>
-		<div class="sex">性别：女</div>
-		<div class="age">年龄：90后 水瓶座</div>
-		<div class="profile">个人简介：吧啦吧啦吧拉</div>
+		<div class="could-age">村龄：{{ userReal.villageAge ?? '6' }}年({{ userReal.createTime ?? '2023年03月注册' }})</div>
+		<div class="sex">性别：{{ userReal.gender ? '男' : '女' }}</div>
+		<div class="age">年龄：{{ userReal.age ?? '90后' }}</div>
+		<div class="profile">个人简介：{{ userReal.signature ?? '吧啦吧啦吧拉' }}</div>
 		<div class="line"></div>
 		<div class="more"><span>查看全部</span><img src="@/assets/icon/person/右折箭头_灰.svg" alt="" /></div>
 	</div>

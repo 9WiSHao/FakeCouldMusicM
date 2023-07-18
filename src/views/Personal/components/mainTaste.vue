@@ -1,11 +1,14 @@
-<script setup></script>
+<script setup>
+	import { useUserStore } from '@/stores/person.js';
+	const { user, userReal } = useUserStore();
+</script>
 <template>
 	<div class="taste">
 		<div class="title">音乐品味</div>
 		<div class="card">
 			<div class="like">
 				<div class="text">我的喜欢</div>
-				<div class="key">111首</div>
+				<div class="key">{{ userReal.loveSongs ?? '加载中' }}首</div>
 				<div class="more">
 					<img src="@/assets/icon/person/爱心.svg" alt="" class="icon" />
 					<div class="mtext">喜欢的音乐</div>
@@ -13,7 +16,7 @@
 			</div>
 			<div class="listenNum">
 				<div class="text">累计听歌</div>
-				<div class="key">970首</div>
+				<div class="key">{{ userReal.listenSongs ?? '加载中' }}首</div>
 				<div class="more">
 					<img src="@/assets/icon/person/排行.svg" alt="" class="icon" />
 					<div class="mtext">听歌排行</div>

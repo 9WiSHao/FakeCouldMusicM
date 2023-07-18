@@ -6,22 +6,27 @@
 	import { useUserStore } from '@/stores/person.js';
 
 	// 没登录的时候的默认值
-	const { user, b } = useUserStore();
+	const { user, userReal, logOff } = useUserStore();
 
 	const toPersionalMessage = () => {
-		if (user.nickname === '未登录') {
+		if (user.nickname == undefined) {
 			router.push('/login');
 			return;
 		}
 		router.push('/user');
+	};
+
+	const logOffNow = () => {
+		logOff();
+		router.push('/login');
 	};
 </script>
 <template>
 	<div class="side-main">
 		<div class="top">
 			<div class="left" @click="toPersionalMessage">
-				<img :src="user.avatarUrl" alt="" class="avator" />
-				<div class="name">{{ user.nickname }}</div>
+				<img :src="user.avatarUrl ?? 'src/assets/images/Akkarin.jpg'" alt="" class="avator" />
+				<div class="name">{{ user.nickname ?? '未登录' }}</div>
 				<img src="@/assets/icon/sideBar/右折箭头.svg" alt="" class="arrows" />
 			</div>
 			<img src="@/assets/icon/sideBar/扫码.svg" alt="" class="scanQR" />
@@ -45,7 +50,7 @@
 		<Services :if_title="true" title="其他" :services="service3" />
 		<Services :if_title="true" title="更多设置" :services="service4" />
 
-		<div class="logoff">退出登录/关闭</div>
+		<div class="logoff" @click="logOffNow">退出登录/关闭</div>
 	</div>
 </template>
 <style scoped lang="scss">

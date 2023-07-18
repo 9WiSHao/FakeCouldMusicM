@@ -1,9 +1,11 @@
 <script setup>
 	import { ref } from 'vue';
 	import { useLoginStore } from '@/stores/login.js';
+	import { useUserStore } from '@/stores/person.js';
 	import router from '@/router/index.js';
 
 	const { a = undefined, b = undefined, getQRkey, getQRcode, checkQRcode } = useLoginStore();
+	const { c = undefined, setUserInformation } = useUserStore();
 
 	let message = ref('');
 	let qrcodeSrc = ref('');
@@ -13,8 +15,10 @@
 		qrcodeSrc.value = await getQRcode(key);
 		message.value = '等待扫码中';
 		checkQRcode(key)
-			.then((res) => {
+			.then(async (res) => {
 				message.value = res;
+				alert('成功登录');
+				await setUserInformation();
 				router.push('/home');
 			})
 			.catch((err) => {

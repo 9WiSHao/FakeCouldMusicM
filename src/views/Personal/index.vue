@@ -4,6 +4,19 @@
 	import UserMain from './components/UserMain.vue';
 	import UserStatus from './components/UserStatus.vue';
 	import UserSetting from './components/UserSetting.vue';
+	import { ref, onMounted, onBeforeUnmount } from 'vue';
+
+	import { useUserStore } from '@/stores/person.js';
+
+	const { user, userReal, setUserInformation, setUserMoreInformation, setUserPlaylist, setUserReal } = useUserStore();
+
+	onMounted(async () => {
+		// 挂载完获取全部主页信息，比较慢
+		await setUserInformation();
+		await setUserMoreInformation();
+		await setUserPlaylist();
+		await setUserReal();
+	});
 </script>
 <template>
 	<div class="bgc">
@@ -13,7 +26,7 @@
 		<UserBase />
 		<div class="table">
 			<div class="text">
-				<div class="main-page">主页</div>
+				<div class="main-page" @click="test">主页</div>
 				<div class="status">动态</div>
 				<div class="video">视频</div>
 				<div class="podcast">播客</div>

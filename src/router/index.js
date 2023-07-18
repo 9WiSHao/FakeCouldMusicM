@@ -34,7 +34,7 @@ const routes = [
 	},
 	{
 		path: '/:catchAll(.*)',
-		redirect: '/songlist',
+		redirect: '/user',
 	},
 ];
 const router = createRouter({
