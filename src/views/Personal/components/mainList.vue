@@ -1,4 +1,5 @@
 <script setup>
+	import router from '@/router/index.js';
 	import { defineProps } from 'vue';
 	defineProps({
 		title: String,
@@ -7,12 +8,12 @@
 	});
 	const toList = (id) => {
 		console.log(id);
-		// router.push({
-		//   path: '/list',
-		//   query: {
-		//     id,
-		//   },
-		// });
+		router.push({
+			name: 'songlist',
+			params: {
+				id: id,
+			},
+		});
 	};
 </script>
 <template>

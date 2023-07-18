@@ -5,6 +5,7 @@
 ## 后端 API
 
 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
+
 [码农实验室-免费 IP 查询接口](https://www.fkcoder.com/)
 
 ## 实现功能
@@ -15,7 +16,7 @@
 |    侧边栏    |    ✔️    |
 |  个人信息页  |    ✔️    |
 | 个人信息编辑 |    ❌    |
-|   歌单页面   |    ❌    |
+|   歌单页面   |    ✔️    |
 | 音乐播放底栏 |    ❌    |
 
 ## 运行

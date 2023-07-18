@@ -1,11 +1,22 @@
-<script setup></script>
+<script setup>
+	import { onMounted } from 'vue';
+	import { useRoute } from 'vue-router';
+	import { useSongListStore } from '@/stores/songList.js';
+	const $route = useRoute();
+
+	const { listDetail, getListDetail, getSongList } = useSongListStore();
+
+	onMounted(async () => {
+		await getSongList($route.params.id);
+	});
+</script>
 <template>
 	<div class="allSongs">
 		<div class="function">
 			<div class="left">
 				<img src="@/assets/icon/songlist/镂空圆播放.svg" alt="" class="play-icon" />
 				<div class="text">播放全部</div>
-				<div class="num">(10)</div>
+				<div class="num">{{ listDetail.songNum ?? 10 }}</div>
 			</div>
 			<div class="right">
 				<img src="@/assets/icon/songlist/添加音乐.svg" alt="" class="add" />
@@ -14,10 +25,13 @@
 			</div>
 		</div>
 		<div class="songs">
-			<div class="song1">
+			<div class="song1" v-if="!listDetail.lists">
 				<div class="num">1</div>
 				<div class="message">
-					<div class="songname">くらべられっ子<span>(更多信息)</span></div>
+					<div class="songname">
+						<span class="mainName">くらべられっ子</span>
+						<span class="moreName">(更多信息)</span>
+					</div>
 					<div class="down">
 						<img src="@/assets/icon/songlist/红心.svg" alt="" class="love" />
 						<div class="high"></div>
@@ -27,15 +41,19 @@
 				<div class="more">
 					<img src="@/assets/icon/songlist/三点更多_灰.svg" alt="" />
 				</div>
+				<div class="loading">加载中...</div>
 			</div>
-			<div class="song1">
-				<div class="num">1</div>
+			<div class="song1" v-else v-for="(item, index) in listDetail.lists" :key="item.id">
+				<div class="num">{{ index + 1 }}</div>
 				<div class="message">
-					<div class="songname">くらべられっ子</div>
+					<div class="songname">
+						<span class="mainName">{{ item.name }}</span>
+						<span class="moreName">{{ item.nameMore ?? '' }}</span>
+					</div>
 					<div class="down">
 						<img src="@/assets/icon/songlist/红心.svg" alt="" class="love" />
 						<div class="high"></div>
-						<div class="singer">ツユ - やっぱり雨は降るんだね</div>
+						<div class="singer">{{ item.singer }} - {{ item.album }}</div>
 					</div>
 				</div>
 				<div class="more">
@@ -46,8 +64,11 @@
 	</div>
 </template>
 <style scoped lang="scss">
-	img {
-		height: 4vh;
+	.loading {
+		color: #999;
+		font-size: 1.2rem;
+		text-align: center;
+		margin-top: 2vh;
 	}
 	.allSongs {
 		background-color: #fff;
@@ -98,7 +119,15 @@
 					width: 72vw;
 					.songname {
 						margin-bottom: 0.4vh;
-						span {
+						display: flex;
+						align-items: center;
+						overflow: hidden;
+						.mainName {
+							max-width: 80vw;
+							white-space: nowrap;
+							text-overflow: ellipsis;
+						}
+						.moreName {
 							color: #999;
 							white-space: nowrap;
 							overflow: hidden;
@@ -110,7 +139,7 @@
 						align-items: center;
 
 						img {
-							height: 1.6vh;
+							height: 1.2vh;
 						}
 						.singer {
 							color: #999;
@@ -119,6 +148,11 @@
 							overflow: hidden;
 							text-overflow: ellipsis;
 						}
+					}
+				}
+				.more {
+					img {
+						height: 2.5vh;
 					}
 				}
 			}

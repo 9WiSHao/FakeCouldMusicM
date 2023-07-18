@@ -15,11 +15,12 @@
 </template>
 <style scoped lang="scss">
 	.listAll {
-		position: relative;
-		width: 100vw;
 		background-color: #5992a1;
+		width: 100vw;
+		overflow: hidden;
 		.top {
 			position: fixed;
+			width: 100vw;
 			top: 0;
 			z-index: 10;
 		}

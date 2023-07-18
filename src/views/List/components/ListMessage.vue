@@ -1,42 +1,53 @@
-<script setup></script>
+<script setup>
+	import { onMounted } from 'vue';
+	import { useRoute } from 'vue-router';
+	import { useSongListStore } from '@/stores/songList.js';
+	const $route = useRoute();
+
+	const { listDetail, songList, getListDetail, getSongList } = useSongListStore();
+
+	onMounted(async () => {
+		await getListDetail($route.params.id);
+	});
+</script>
 <template>
 	<div class="list-message">
 		<div class="message">
 			<div class="left">
-				<img src="@/assets/images/never.png" alt="" class="cover" />
+				<img :src="listDetail.coverImgUrl ?? '/src/assets/images/never.png'" alt="" class="cover" />
 				<div class="count">
 					<img src="@/assets/icon/songlist/播放_白.svg" alt="" />
-					<div class="number">22</div>
+					<div class="number">{{ listDetail.playCount ?? 'unknow' }}</div>
 				</div>
 			</div>
 			<div class="right">
 				<div class="list-name">
-					<div class="name">歌单13214123123 2321qweqwe3123</div>
+					<div class="name">{{ listDetail.name ?? '歌单不知道叫啥' }}</div>
 					<div class="more"></div>
 				</div>
 				<div class="owner">
-					<img src="@/assets/images/Akkarin.jpg" alt="" class="avator" />
-					<div class="nickname">Akkarin</div>
+					<img :src="listDetail.creatorAvator ?? '/src/assets/images/Akkarin.jpg'" alt="" class="avator" />
+					<div class="nickname">{{ listDetail.creator ?? 'Akkarin' }}</div>
 					<img src="@/assets/icon/songlist/右折箭头.svg" alt="" class="arrow" />
 				</div>
 			</div>
 		</div>
 		<div class="introduction">
-			<div class="text">这是简介</div>
+			<div class="text">{{ listDetail.description ?? '这是简介' }}</div>
 			<img src="@/assets/icon/songlist/右折箭头.svg" alt="" class="arrow" />
 		</div>
 		<div class="function">
 			<div class="share">
 				<img src="@/assets/icon/songlist/分享.svg" alt="" />
-				<div class="text">123</div>
+				<div class="text">{{ listDetail.shareNum ?? 1234 }}</div>
 			</div>
 			<div class="comment">
 				<img src="@/assets/icon/songlist/评论.svg" alt="" />
-				<div class="text">456</div>
+				<div class="text">{{ listDetail.commentNum ?? 1234 }}</div>
 			</div>
 			<div class="collection">
 				<img src="@/assets/icon/songlist/收藏列表.svg" alt="" />
-				<div class="text">789</div>
+				<div class="text">{{ listDetail.collectNum ?? 1234 }}</div>
 			</div>
 		</div>
 	</div>

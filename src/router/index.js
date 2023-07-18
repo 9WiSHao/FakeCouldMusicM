@@ -29,12 +29,13 @@ const routes = [
 		component: User,
 	},
 	{
-		path: '/songlist',
+		path: '/songlist/:id',
+		name: 'songlist',
 		component: () => import('@/views/List/index.vue'),
 	},
 	{
 		path: '/:catchAll(.*)',
-		redirect: '/user',
+		redirect: '/home',
 	},
 ];
 const router = createRouter({
