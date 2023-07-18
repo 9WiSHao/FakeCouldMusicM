@@ -11,16 +11,22 @@
 </script>
 
 <template>
-	<div :class="['sidebar-container', { 'show-sidebar': showSidebar }]">
-		<Sidebar />
+	<div class="home">
+		<div :class="['sidebar-container', { 'show-sidebar': showSidebar }]">
+			<Sidebar />
+		</div>
+		<TopBar @moreClick="toggleSidebar" />
+		<div class="find">主页，先空着</div>
+		<div :class="['mask', { 'show-mask': showSidebar }]" @click="toggleSidebar"></div>
 	</div>
-	<TopBar @moreClick="toggleSidebar" />
-	<div class="home">主页，先空着</div>
-	<div :class="['mask', { 'show-mask': showSidebar }]" @click="toggleSidebar"></div>
 </template>
 
 <style scoped lang="scss">
 	.home {
+		height: 30vh;
+		width: 100vw;
+	}
+	.find {
 		width: 100vw;
 		text-align: center;
 		background-color: aqua;

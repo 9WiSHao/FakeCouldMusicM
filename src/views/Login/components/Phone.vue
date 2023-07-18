@@ -39,7 +39,7 @@
 
 	// 验证cookie
 	let cookie = ref('');
-	const { a, verifyCookie, c } = useLoginStore();
+	const { a = undefined, verifyCookie } = useLoginStore();
 	const { user, setUserInformation } = useUserStore();
 	const verifyC = async () => {
 		let result = await verifyCookie(cookie.value);

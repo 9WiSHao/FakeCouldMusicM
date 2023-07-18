@@ -29,8 +29,12 @@ const routes = [
 		component: User,
 	},
 	{
+		path: '/songlist',
+		component: () => import('@/views/List/index.vue'),
+	},
+	{
 		path: '/:catchAll(.*)',
-		redirect: '/login',
+		redirect: '/songlist',
 	},
 ];
 const router = createRouter({

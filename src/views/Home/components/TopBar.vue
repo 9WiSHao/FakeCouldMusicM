@@ -32,7 +32,7 @@
 		.search {
 			padding: 0 4vw;
 			height: 5vh;
-			background-color: pink;
+			background: linear-gradient(to right, #dbdcfd, #f5d7ee);
 			width: 70vw;
 			border-radius: 3.5vh;
 			display: flex;

@@ -84,7 +84,7 @@
 		}
 		.vip {
 			width: 100%;
-			background-color: #443d3d;
+			background: linear-gradient(to right, #3a3738, #5f4f50);
 			border-radius: 2vh;
 			padding: 1.5vh;
 			margin-bottom: 2vh;
