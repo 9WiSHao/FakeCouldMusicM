@@ -19,3 +19,24 @@ export function verifyCookieAPI(cookie) {
 		},
 	});
 }
+
+export function getQrKeyAPI() {
+	return httpInstance({
+		url: `/login/qr/key?timestamp=${Date.now()}`,
+		method: 'GET',
+	});
+}
+
+export function getQrImgAPI(key) {
+	return httpInstance({
+		url: `/login/qr/create?key=${key}&qrimg=true&timestamp=${Date.now()}`,
+		method: 'GET',
+	});
+}
+
+export function checkQrCodeAPI(key) {
+	return httpInstance({
+		url: `/login/qr/check?key=${key}&timestamp=${Date.now()}`,
+		method: 'GET',
+	});
+}

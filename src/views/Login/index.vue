@@ -7,7 +7,7 @@
 		<div class="login-main">
 			<router-view></router-view>
 		</div>
-		<div class="question">登录遇到问题(这登录接口全是问题)</div>
+		<div class="question">登录遇到问题</div>
 	</div>
 </template>
 

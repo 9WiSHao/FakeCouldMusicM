@@ -7,8 +7,6 @@
 
 	// 没登录的时候的默认值
 	const { user, b } = useUserStore();
-	// let username = ref('未登录');
-	// let avatorUrl = ref('src/assets/images/Akkarin.jpg');
 
 	const toPersionalMessage = () => {
 		if (user.nickname === '未登录') {
