@@ -24,7 +24,11 @@
 			nickname.value = userReal.nickname;
 		}
 		if (gender.value == '') {
-			gender.value = userReal.gender;
+			if (userReal.gender == true) {
+				gender.value = '1';
+			} else {
+				gender.value = '2';
+			}
 		}
 		if (birthday.value == '') {
 			birthday.value = userReal.ageString;
@@ -59,6 +63,7 @@
 		if (res.status == 200) {
 			alert('修改成功');
 		}
+		location.value = userReal.adress2;
 	};
 
 	const backUser = () => {
