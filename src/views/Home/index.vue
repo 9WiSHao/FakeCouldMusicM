@@ -1,37 +1,40 @@
 <script setup>
 	import TopBar from './components/TopBar.vue';
 	import Sidebar from '../Sidebar/index.vue';
-	import { ref, onMounted, onUnmounted } from 'vue';
+	import { ref, onMounted, onUnmounted, watch } from 'vue';
 
 	let showSidebar = ref(false);
-	// 左侧屏幕 20vw 起点
-	const sidebarThreshold = window.innerWidth * 0.2;
-
 	const toggleSidebar = () => {
 		showSidebar.value = !showSidebar.value;
 	};
 
-	onMounted(() => {
-		// 初始触碰位置
-		let startX = 0;
-		let startY = 0;
-		// 触碰开始回调,记录起始坐标
-		const touchStartHandler = (event) => {
-			startX = event.touches[0].clientX;
-			startY = event.touches[0].clientY;
-		};
-		// 触碰滑动回调,计算滑动距离和方向
-		const touchMoveHandler = (event) => {
-			const deltaX = event.touches[0].clientX - startX;
-			const deltaY = event.touches[0].clientY - startY;
-			// 判断为左侧滑动且距离超过阈值,显示侧边栏
-			if (startX <= sidebarThreshold && deltaX > 0 && Math.abs(deltaY) < Math.abs(deltaX)) {
-				showSidebar.value = true;
-			} else {
-				showSidebar.value = false;
-			}
-		};
+	// 左侧屏幕 20vw 起点
+	const sidebarThreshold = window.innerWidth * 0.2;
+	// 滑动打开侧边栏所需最小距离
+	const slideOpenMin = 50;
+	const deltaYThreshold = 30;
 
+	// 初始触碰位置
+	let startX = 0;
+	let startY = 0;
+	// 触碰开始回调,记录起始坐标
+	const touchStartHandler = (event) => {
+		startX = event.touches[0].clientX;
+		startY = event.touches[0].clientY;
+	};
+	// 触碰滑动回调,计算滑动距离和方向
+	const touchMoveHandler = (event) => {
+		const deltaX = event.touches[0].clientX - startX;
+		const deltaY = event.touches[0].clientY - startY;
+		// 判断为左侧滑动且距离超过阈值,显示侧边栏
+		if (startX <= sidebarThreshold && deltaX > slideOpenMin && Math.abs(deltaY) < deltaYThreshold) {
+			showSidebar.value = true;
+		} else {
+			showSidebar.value = false;
+		}
+	};
+
+	onMounted(() => {
 		document.addEventListener('touchstart', touchStartHandler);
 		document.addEventListener('touchmove', touchMoveHandler);
 
@@ -40,6 +43,18 @@
 			document.removeEventListener('touchstart', touchStartHandler);
 			document.removeEventListener('touchmove', touchMoveHandler);
 		});
+	});
+
+	watch(showSidebar, (newValue) => {
+		if (newValue) {
+			// 显示侧边栏时清除监听
+			document.removeEventListener('touchstart', touchStartHandler);
+			document.removeEventListener('touchmove', touchMoveHandler);
+		} else {
+			// 隐藏侧边栏时重新绑定监听
+			document.addEventListener('touchstart', touchStartHandler);
+			document.addEventListener('touchmove', touchMoveHandler);
+		}
 	});
 </script>
 
