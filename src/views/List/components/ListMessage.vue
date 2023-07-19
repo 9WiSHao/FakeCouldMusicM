@@ -6,8 +6,8 @@
 
 	const { listDetail, songList, getListDetail, getSongList } = useSongListStore();
 
-	onMounted(async () => {
-		await getListDetail($route.params.id);
+	onMounted(() => {
+		getListDetail($route.params.id);
 	});
 </script>
 <template>
@@ -22,7 +22,7 @@
 			</div>
 			<div class="right">
 				<div class="list-name">
-					<div class="name">{{ listDetail.name ?? '歌单不知道叫啥' }}</div>
+					<div class="name">{{ listDetail.name ?? '歌单加载中' }}</div>
 					<div class="more"></div>
 				</div>
 				<div class="owner">

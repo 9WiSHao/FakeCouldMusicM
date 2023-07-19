@@ -34,6 +34,10 @@ const routes = [
 		component: () => import('@/views/List/index.vue'),
 	},
 	{
+		path: '/setting',
+		component: () => import('@/views/Setting/index.vue'),
+	},
+	{
 		path: '/:catchAll(.*)',
 		redirect: '/home',
 	},

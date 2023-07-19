@@ -4,6 +4,7 @@
 	import UserMain from './components/UserMain.vue';
 	import UserStatus from './components/UserStatus.vue';
 	import UserSetting from './components/UserSetting.vue';
+	import settingOut from './components/settingOut.vue';
 	import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 	import { useUserStore } from '@/stores/person.js';
@@ -11,19 +12,29 @@
 	const { user, userReal, setUserInformation, setUserMoreInformation, setUserPlaylist, setUserReal } = useUserStore();
 
 	onMounted(async () => {
-		// 挂载完获取全部主页信息，比较慢
-		await setUserInformation();
-		await setUserMoreInformation();
-		await setUserPlaylist();
-		await setUserReal();
+		if (!userReal.listenSongs) {
+			// 挂载完获取全部主页信息，比较慢
+			await setUserInformation();
+			await setUserMoreInformation();
+			await setUserPlaylist();
+			await setUserReal();
+		}
 	});
+
+	let settin = ref(false);
+	const toggleSetting = () => {
+		settin.value = !settin.value;
+	};
+	const outSetting = () => {
+		settin.value = false;
+	};
 </script>
 <template>
 	<div class="bgc">
 		<div class="top">
-			<UserTop />
+			<UserTop @setEdit="toggleSetting" />
 		</div>
-		<UserBase />
+		<UserBase @click="outSetting" />
 		<div class="table">
 			<div class="text">
 				<div class="main-page" @click="test">主页</div>
@@ -38,6 +49,7 @@
 			<!-- <UserStatus />
 			<UserSetting />  -->
 		</div>
+		<div :class="settin ? 'In' : 'Out'"><settingOut /></div>
 	</div>
 </template>
 <style scoped lang="scss">
@@ -76,5 +88,18 @@
 			// left: 54vw;
 			// left: 76vw;
 		}
+	}
+
+	.Out {
+		position: absolute;
+		top: -100%;
+		right: -100%;
+		transition: all 0.5s ease-in-out;
+	}
+	.In {
+		position: absolute;
+		top: 0;
+		right: 0;
+		transition: all 0.5s ease-in-out;
 	}
 </style>

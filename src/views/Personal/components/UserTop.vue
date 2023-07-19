@@ -2,6 +2,7 @@
 	import router from '@/router/index';
 	import { ref, onMounted, onBeforeUnmount } from 'vue';
 	import { useUserStore } from '@/stores/person.js';
+
 	const { user } = useUserStore();
 
 	const toHome = () => {
@@ -23,6 +24,11 @@
 		// 在组件销毁前移除滚动事件监听器
 		window.removeEventListener('scroll', handleScroll);
 	});
+
+	const emit = defineEmits(['setEdit']);
+	const clickEdit = () => {
+		emit('setEdit');
+	};
 </script>
 <template>
 	<div :class="['top', { 'scrolled-top': scrolled }]">
@@ -32,7 +38,7 @@
 		</div>
 		<div class="center"></div>
 		<div class="right">
-			<img :src="scrolled ? 'src/assets/icon/person/三点更多.svg' : 'src/assets/icon/person/三点更多_白.svg'" alt="" />
+			<img :src="scrolled ? 'src/assets/icon/person/三点更多.svg' : 'src/assets/icon/person/三点更多_白.svg'" alt="" @click="clickEdit" />
 		</div>
 	</div>
 </template>

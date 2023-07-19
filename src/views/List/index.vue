@@ -17,7 +17,6 @@
 	.listAll {
 		background-color: #5992a1;
 		width: 100vw;
-		overflow: hidden;
 		.top {
 			position: fixed;
 			width: 100vw;

@@ -81,6 +81,8 @@ export const useUserStore = defineStore('user', () => {
 		// 计算是几零后
 		let age1 = new Date(user.value.birthday).getFullYear();
 		userReal.value.age = `${parseInt((age1 % 100) / 10)}0后`;
+
+		userReal.value.ageString = `${age1}-${new Date(user.value.birthday).getMonth() + 1}-${new Date(user.value.birthday).getDate()}`;
 		// 获取城市
 		const location = new ChinaLocation(list);
 		location.changeLocation(user.value.provinceCode, user.value.cityCode);

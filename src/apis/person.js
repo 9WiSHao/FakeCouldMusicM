@@ -67,3 +67,17 @@ export function getUserCommentAPI(id) {
 		method: 'GET',
 	});
 }
+
+export function updateInformationAPI(gender, birthday, nickname, province, city, signature) {
+	let formData = new FormData();
+	const cookie = localStorage.getItem('cookie');
+	formData.append('cookie', cookie);
+	return httpInstance({
+		url: `/user/update?gender=${gender}&signature=${signature}&city=${city}&nickname=${nickname}&birthday=${birthday}&province=${province}&noCookie=true`,
+		method: 'POST',
+		data: formData,
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+	});
+}

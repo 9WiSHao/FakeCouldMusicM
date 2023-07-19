@@ -2,12 +2,15 @@
 	import { onMounted } from 'vue';
 	import { useRoute } from 'vue-router';
 	import { useSongListStore } from '@/stores/songList.js';
+	import { ref } from 'vue';
 	const $route = useRoute();
-
+	let sure = ref(true);
 	const { listDetail, getListDetail, getSongList } = useSongListStore();
 
 	onMounted(async () => {
+		sure.value = true;
 		await getSongList($route.params.id);
+		sure.value = false;
 	});
 </script>
 <template>
@@ -25,7 +28,7 @@
 			</div>
 		</div>
 		<div class="songs">
-			<div class="song1" v-if="!listDetail.lists">
+			<div class="song1" v-if="sure">
 				<div class="num">1</div>
 				<div class="message">
 					<div class="songname">
@@ -41,7 +44,7 @@
 				<div class="more">
 					<img src="@/assets/icon/songlist/三点更多_灰.svg" alt="" />
 				</div>
-				<div class="loading">加载中...</div>
+				<div class="loading">(示例结构) 加载中...</div>
 			</div>
 			<div class="song1" v-else v-for="(item, index) in listDetail.lists" :key="item.id">
 				<div class="num">{{ index + 1 }}</div>
@@ -66,9 +69,12 @@
 <style scoped lang="scss">
 	.loading {
 		color: #999;
-		font-size: 1.2rem;
-		text-align: center;
+		font-size: larger;
 		margin-top: 2vh;
+		position: absolute;
+		margin-bottom: -10vh;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 	.allSongs {
 		background-color: #fff;
@@ -105,6 +111,7 @@
 			}
 		}
 		.songs {
+			position: relative;
 			display: flex;
 			flex-direction: column;
 			gap: 2vh;
